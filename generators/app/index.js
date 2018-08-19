@@ -1,38 +1,36 @@
-'use strict';
-const Generator = require('yeoman-generator');
-const chalk = require('chalk');
-const yosay = require('yosay');
+"use strict";
+const chalk = require("chalk");
+const Stream = require("stream");
+const Generator = require("yeoman-generator");
 
-module.exports = class extends Generator {
-  prompting() {
-    // Have Yeoman greet the user.
-    this.log(
-      yosay(`Welcome to the kryptonian ${chalk.red('generator-game')} generator!`)
-    );
+const stream = new Stream.Transform({ objectMode: true });
 
-    const prompts = [
-      {
-        type: 'confirm',
-        name: 'someAnswer',
-        message: 'Would you like to enable this option?',
-        default: true
-      }
-    ];
+stream._transform = function(data, unused, callback) {
+  data.path = data.path.replace(/\/?_/g, "/.");
+  callback(null, data);
+};
 
-    return this.prompt(prompts).then(props => {
-      // To access props later use this.props.someAnswer;
-      this.props = props;
-    });
-  }
-
+class GameGenerator extends Generator {
   writing() {
-    this.fs.copy(
-      this.templatePath('dummyfile.txt'),
-      this.destinationPath('dummyfile.txt')
-    );
+    console.log("Start ...");
+    this.registerTransformStream(stream);
+    this.fs.copyTpl(this.templatePath(), this.destinationPath(), {});
   }
 
   install() {
-    this.installDependencies();
+    this.installDependencies({
+      bower: false,
+      yarn: { force: true },
+      npm: false
+    }).then(() => {
+      console.log(`
+        ${chalk.green("Created successfully.\n")}
+        ${chalk.grey('Launch app with "')}${chalk.cyan(
+        "yarn start"
+      )}${chalk.grey('"')}
+      `);
+    });
   }
-};
+}
+
+module.exports = GameGenerator;

@@ -25,8 +25,8 @@ class GameGenerator extends Generator {
     }).then(() => {
       console.log(`
         ${chalk.green("Created successfully.\n")}
-        ${chalk.grey('Launch app with "')}${chalk.cyan(
-        "yarn start"
+        ${chalk.grey('Build app with "')}${chalk.cyan(
+        "yarn webpack"
       )}${chalk.grey('"')}
       `);
     });

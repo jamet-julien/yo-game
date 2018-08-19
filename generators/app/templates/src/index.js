@@ -33,11 +33,12 @@ async function init(callBack) {
 }
 
 /*
+// décommenter avant le "build" 
 window.Game = init;
 */
 
 init(o => {
-  // penser a intergrer Event dans l'instance
+  // penser a intégrer Event dans l'instance
   o.on("ready", () => {
     o.play();
   });

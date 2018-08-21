@@ -23,17 +23,18 @@
 
     #game {
 
-      width: 100%;
-      height: 100%;
-      margin: 0px;
-      cursor: pointer;
+      display: block;
+      image-rendering: pixelated;
+      height: 100vh;
+      margin: auto;
+      outline: 1px green solid;
 
     }
   </style>
 </head>
 
 <body>
-  <canvas id="game"></canvas>
+  <canvas id="game" width="256" height="240"></canvas>
 
 
   <script src="./src/index.js" type="module" charset="utf-8"></script>
